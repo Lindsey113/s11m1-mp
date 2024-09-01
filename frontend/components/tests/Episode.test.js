@@ -26,29 +26,48 @@ their own search, and meet a mysterious girl in the forest.",
 describe('Episode component', () => {
   test("renders without error", () => {
     // 👉 TASK: render the component passing episode data
+    render(<Episode episode={exampleEpisodeData} />)
 
     // 👉 TASK: print the simulated DOM using screen.debug
-
+    screen.debug()
   })
   test("renders texts and alt texts correctly", () => {
     // 👉 TASK: render the component passing episode data and getting the rerender utility
 
+    const { rerender } = render(<Episode episode={exampleEpisodeData} />)
+
     // 👉 TASK: check that the summary renders to the DOM
 
+    screen.getByText(exampleEpisodeData.summary)
+
     // 👉 TASK: check that the alt text "episode image" is present
+
+    screen.getAllByAltText('episode image')
 
     // 👉 TASK: rerender the component passing episode data lacking an image
     // ❗ Study the Episode component to understand what happens in this case
 
+    rerender(<Episode episode={exampleEpisodeData.image} />)
+    screen.getByAltText('generic episode image')
+
     // 👉 TASK: check that the default image appears in the DOM
     // ❗ Use querySelector to select the image by its src attribute
 
+    expect(document.querySelector('img[src="https://i.ibb.co/2FsfXqM/stranger-things.png"'))
+      .toBeInTheDocument()
+
     // 👉 TASK: check that the "generic episode image" alt text is present
+
+    screen.getByAltText('generic episode image')
 
     // 👉 TASK: rerender the component passing an undefined episode
     // ❗ Study the Episode component to understand what happens in this case
 
+    rerender(<Episode />)
+
     // 👉 TASK: check that the "Loading episode..." text is present
 
+    screen.getByText('Loading episode...')
+    
   })
 })
